@@ -1,0 +1,482 @@
+\documentclass{article}
+\usepackage[colorlinks, urlcolor=blue, linkcolor=red, citecolor=green]{hyperref}
+\usepackage{fancyhdr} %设置页眉和页脚的
+\usepackage{extramarks} %设置continue那玩意的
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz} %画线的
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{courier}
+\usepackage{listings}
+\usetikzlibrary{automata,positioning}
+
+%表
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\heiti} %还可以定义其他的
+\captionsetup{labelsep=space, font={small, bf}, skip=2pt} %space可以改成quad
+
+%图
+%*****************图片及其相关设置***************************
+\usepackage{graphicx}
+\graphicspath{{tupian/}}
+\usepackage{subfigure}
+% 导入tikz包
+\usepackage{tikz}
+\usetikzlibrary{math}
+
+%*****************代码相关设置***************************
+\usepackage{pythonhighlight}
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass: \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#2}
+\newcommand{\hmwkDueDate}{Oct 28, 2021}
+\newcommand{\hmwkClass}{DDA 6050}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Yixiang Fang}
+\newcommand{\hmwkAuthorName}{Haoyu Kang}
+\newcommand{\hmwkAuthorSchool}{School of Data Science}
+\newcommand{\hmwkAuthorNumber}{Sno.220041025}
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+\usepackage[algo2e,vlined,ruled]{algorithm2e}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{LCS}}
+
+\vspace{4pt}
+
+The state transition equation is as below:
+\begin{equation}
+    \begin{split}
+        c[i,j]=
+        \left\{
+        \begin{array}{lll}
+                c[i-1,j-1]+1, \ \ x[i]=y[j] \\
+                max(c[i-1,j],c[i,j-1]), \ \ otherwise.
+        \end{array}
+        \right.
+    \end{split}
+\end{equation}
+For this question, we adopt method of state compression instead of a traditional approach that takes 
+$O(n^2)$ memory. In details, we use \textbf{scrolling array} which is a one-demision array to save each states. 
+For each inside loop, $dp[j]$ represents length of LCS between i-length of prefix A  and the j-length of prefix B.
+The variable $temp$ will save the value of  LCS between i-1 prefix of A  and the j-1 prefix of B.
+\vspace{4pt}
+
+Hence the optimal method of LCS just takes \textbf{$O(n)$} space complexity and  \textbf{$O(n^2)$}
+time complexity.
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<vector>
+#include<cstdio>
+using namespace std;
+int main(){
+    int num;
+    vector<int> seq1,seq2;
+    while(scanf("%d",&num)) {
+        seq1.push_back(num);
+        if(cin.get()=='\n') break;
+    }
+    while(scanf("%d",&num)){
+        seq2.push_back(num);
+        if(cin.get()=='\n') break;
+    }
+    int n=seq1.size();
+    vector<int> dp(n+1,0);
+    int pre;
+    for(int i=1;i<n+1;i++){
+        for(int j=1;j<n+1;j++){
+            int temp=dp[j];
+            if(i==1 && j==1) dp[j]=seq1[i-1]==seq2[j-1]?1:0;
+            else if(i==1)  dp[j]=seq1[i-1]==seq2[j-1]?1:dp[j-1];
+            else if(j==1)  dp[j]=seq1[i-1]==seq2[j-1]?1:dp[j];
+            else{
+                if(seq1[i-1]==seq2[j-1]) dp[j]=pre+1;
+                else dp[j]=max(dp[j-1],dp[j]);
+            }
+            pre=temp;
+        }
+    }
+    cout<<dp[n]<<endl;
+}
+\end{lstlisting}
+
+
+\vspace{4pt}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{0-1 Knapsack Problem}}
+
+\vspace{4pt}
+
+The state transition equation is as below:
+\begin{equation}
+    \begin{split}
+        B[k,w]=
+        \left\{
+        \begin{array}{lll}
+                B[k-1,w]+1, \ \ w_k>w \\
+                max(B[k-1,w],B[k-1,w_k]+b_k), \ \ else.
+        \end{array}
+        \right.
+    \end{split}
+\end{equation}
+We also adopt method of state compression instead of a traditional approach that takes 
+$O(n^2)$ memory. In details, we use \textbf{scrolling array} which is a one-demision array to save each states. 
+For each inside loop, $dp[j]$ represents maxmum value the bag is able to attain if the volume of bag is limited within j
+respected to subset of $S_i$. Different from the problem 1, in this question we creat additional array to save states of the last once loop.
+e.g. $pre[j-weight[i-1]]$ represents maxmum value the bag is able to attain if the volume of bag is limited within j-weight[i-1]
+respected to subset of $S_{i-1}$\\
+
+Hence the optimal method just takes \textbf{$O(n)$} space complexity and  \textbf{$O(n^2)$}
+time complexity.\\
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<vector>
+using namespace std;
+int main(){
+    int n,w;
+    cin>>n>>w;
+    vector<int> weight,value;
+    int w_i,v_i;
+    for(int i=0;i<n;i++){
+        cin>>w_i>>v_i;
+        weight.push_back(w_i);
+        value.push_back(v_i);
+    }
+    vector<int> dp(w+1,0);
+    vector<int> pre(w+1,0);
+    for(int i=1;i<n+1;i++){
+        if(i==n){
+            if(weight[i-1]<=w) 
+            dp[w]=max(dp[w],pre[w-weight[i-1]]+value[i-1]);
+            break;
+        }
+        for(int j=1;j<w+1;j++){
+            if(weight[i-1]<=j) 
+            dp[j]=max(dp[j],pre[j-weight[i-1]]+value[i-1]);
+        }
+        pre=dp;
+    }
+    cout<< dp[w] <<endl;
+}
+\end{lstlisting}
+
+
+
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{The Shortest Path Problem}}
+
+\vspace{4pt}
+
+The state transition equation is as below:
+\begin{equation}
+    \begin{split}
+        dst[u]=max \left\{ dst[u],dst[v]+w \right\}
+    \end{split}
+\end{equation}
+Since the question descprtion tells that it contains negative edge, we adopt Bellmanford to solve this question.
+We use two-demision array $edges$ to save edge with weight, and one-demision array $dst$ to represent the shortest path from start point to
+each station. Bellmanford claims that the shortest path will not cover than n-1 edges. Therefore in the i-th loop, dst[u] represent the shortest distances to u if 
+only go through i edges.
+\vspace{4pt}
+
+Hence the optimal method just takes \textbf{$O(n^2)$} space complexity and  \textbf{$O(n^2)$}
+time complexity.
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<climits>
+using namespace std;
+int main(){
+    int n,m,s,t;
+    cin>>n>>m>>s>>t;
+    vector<vector<int>> edges;
+    for(int i=0;i<m;i++){
+        int u,v,w;
+        cin>>u>>v>>w;
+        edges.push_back({u,v,w});
+    }
+    vector<int> dst(n+1,INT_MAX);
+    dst[s]=0;
+    for(int i=0;i<n-1;i++){
+        int flag=0;
+        for(const auto& e:edges){
+            int u=e[0];
+            int v=e[1];
+            int w=e[2];
+            if(dst[u]!=INT_MAX && dst[v]>dst[u]+w){
+                dst[v]=dst[u]+w;
+                flag=1;
+            }
+        }
+        if(!flag) break;
+
+    }
+    cout<<dst[t]<<endl;
+}
+\end{lstlisting}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+    \vspace{4pt}
+    \textbf{\large{LIS}}
+    
+    \vspace{4pt}
+    
+    Different from what we learn in class, I optimalize the algirithm with less memory and time cost. In this algorithm, we just creat one-demision array
+    to save increasing sequence. In the i-th loop, if $nums[i] > back \ of \ dp$ put the nums[i] into the end of the array. Otherwise find the one which is larger than
+    nums[i] from left, and replace it.
+    \vspace{4pt}
+    
+    Hence the optimal method just takes \textbf{$O(n)$} space complexity and  \textbf{$O(nlogn)$}
+    time complexity.
+    
+    The cpp code is attached as follow:
+    \begin{lstlisting}
+#include<iostream>
+#include<vector>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<int> nums;
+    int num;
+    for(int i=0;i<n;i++) {
+        cin>>num;
+        nums.push_back(num);
+    }
+    if (n <= 1) return n;
+    vector<int> dp;
+    dp.push_back(nums[0]);
+    for (int i = 1; i < n; ++i) {
+        if (dp.back() < nums[i]) {
+            dp.push_back(nums[i]);
+        } else {
+            /* 找到第一个比nums[i]大的元素 */
+            auto itr = lower_bound(dp.begin(), dp.end(), nums[i]);
+            *itr = nums[i];
+        }
+    }
+    cout<<(int)dp.size()<<endl;
+}
+    \end{lstlisting}
+    \end{homeworkProblem}
+
+    \begin{homeworkProblem}
+
+        \vspace{4pt}
+        \textbf{\large{Max M Sum Subsequences Problem}}
+        
+        \vspace{4pt}
+
+        The state transition equation is as below:
+        \begin{equation}
+            \begin{split}
+                DP[i,j]=
+                \left\{
+                \begin{array}{lll}
+                        mk[i-1,j-1]+nums[j], \ \ i==j \\
+                        max(DP[i,j-1]+nums[j],mk[i-1,j-1]+nums[j]), \ \ else.
+                \end{array}
+                \right.
+            \end{split}
+        \end{equation}
+        
+        In above equation, $DP[i,j]$ represents max i sum subsequnces  of j preflix of sequence when the j-th number is in
+        the i-th subsequence, and $mk[i,j]$ represents max i sum subsequnces of j preflix of the sequence. In order to compress 
+        states, we also adopt scrolling arrays to replace above two-demision arrays.
+        \vspace{4pt}
+        
+        Hence the optimal method just takes \textbf{$O(n)$} space complexity and  \textbf{$O(nlogn)$}
+        time complexity.
+        
+        The cpp code is attached as follow:
+    \begin{lstlisting}
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<cstring>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    int dp[n];
+    int nums[n];
+    // vector<int> nums(n,0);
+    // vector<int> dp(n,0);
+    for(int i=0;i<n;i++){
+        int num;
+        cin>>num;
+        nums[i]=num;
+    }
+    int res;
+    int max_sum;
+    // vector<int> mk(n,0);
+    int mk[n];
+    memset(dp,0,sizeof(int)*n);
+    memset(mk,0,sizeof(int)*n);
+    for(int i=0;i<m;i++){
+        max_sum=INT_MIN;
+        for(int j=i;j<n;j++){
+            if(j==i) {
+                if(j==0) dp[j]=nums[j];
+                else dp[j]=mk[j-1]+nums[j];
+            }
+            else {
+                dp[j]=max(dp[j-1]+nums[j],mk[j-1]+nums[j]);
+                mk[j-1]=max_sum;
+            }
+            max_sum=max(max_sum,dp[j]);
+        }
+    }
+    cout<<max_sum<<endl;
+
+}
+    \end{lstlisting}
+        \end{homeworkProblem}
+\end{document}
+

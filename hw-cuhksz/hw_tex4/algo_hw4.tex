@@ -1,0 +1,611 @@
+\documentclass{article}
+\usepackage[colorlinks, urlcolor=blue, linkcolor=red, citecolor=green]{hyperref}
+\usepackage{fancyhdr} %设置页眉和页脚的
+\usepackage{extramarks} %设置continue那玩意的
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz} %画线的
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{courier}
+\usepackage{listings}
+\usetikzlibrary{automata,positioning}
+
+%表
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\heiti} %还可以定义其他的
+\captionsetup{labelsep=space, font={small, bf}, skip=2pt} %space可以改成quad
+
+%图
+%*****************图片及其相关设置***************************
+\usepackage{graphicx}
+\graphicspath{{tupian/}}
+\usepackage{subfigure}
+% 导入tikz包
+\usepackage{tikz}
+\usetikzlibrary{math}
+
+%*****************代码相关设置***************************
+\usepackage{pythonhighlight}
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass: \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#4}
+\newcommand{\hmwkDueDate}{Dec 7, 2021}
+\newcommand{\hmwkClass}{DDA 6050}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Yixiang Fang}
+\newcommand{\hmwkAuthorName}{Haoyu Kang}
+\newcommand{\hmwkAuthorSchool}{School of Data Science}
+\newcommand{\hmwkAuthorNumber}{Sno.220041025}
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+\usepackage[algo2e,vlined,ruled]{algorithm2e}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{String Matching}}
+
+\vspace{4pt}
+For this question, we use KMP algorithm. In this algorithm, we should design $next$ function in advance. Given
+$P[1,\cdots,m]$, let $next$ be a function $\left\{ 1,2,\cdots, m \right\} \rightarrow \left\{ 0,1,\cdots, m-1 \right\}$ such that
+\begin{equation}
+    \begin{split}
+        next(q)=max\left\{k:k<q \quad and \quad p[1\cdots k] \text{ is a suffix of } p[1\cdots q]\right\}
+    \end{split}
+\end{equation}
+
+\vspace{4pt}
+
+Hence the optimal method of KMP just takes \textbf{$O(m+n)$} time complexity and  \textbf{$O(n)$}
+space complexity.
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+vector<int> compute_next(string P){
+    int m=P.size();
+    vector<int>next(m,-1);
+    int k=-1;
+    for(int q=1;q<m;q++){
+        while(k>-1 and P[k+1]!=P[q]) k=next[k];
+        if(P[k+1]==P[q]) k=k+1;
+        next[q]=k;
+    }
+    return next;
+}
+int KMP_StringMatcher(string T,string P){
+    int n=T.size();
+    int m=P.size();
+    vector<int> next=compute_next(P);
+    int q=-1;
+    for(int i=0;i<n;i++){
+        while(q>-1 and P[q+1]!=T[i])q=next[q];
+        if(P[q+1]==T[i]) q=q+1;
+        if(q==m-1) return i-m+1;
+    }
+    return -1;
+}
+int main(){
+    string T,P;
+    cin>>T;
+    cin>>P;
+    int index=KMP_StringMatcher(T,P);
+    cout<<index<<endl;
+}
+\end{lstlisting}
+
+
+\vspace{4pt}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{Edit Distance}}
+
+\vspace{4pt}
+
+The state transition equation is as below:
+\begin{equation}
+    \begin{split}
+        D[m,n]=
+        \left\{
+        \begin{array}{lll}
+                min(min(D[m-1,n]+1,D[m][n]+1),D[m-1][n-1]), \ \ \text{ If } W_1[m]=W_2[n] \\
+                min(min(D[m-1,n]+1,D[m][n]+1),D[m-1][n-1]+1), \ \ else.
+        \end{array}
+        \right.
+    \end{split}
+\end{equation}
+We also adopt method of state compression instead of a traditional approach that takes 
+$O(n^2)$ memory. In details, we use \textbf{scrolling array} which is a one-demision array to save each states. \\
+Hence the optimal method just takes \textbf{$O(n)$} space complexity and  \textbf{$O(n^2)$}
+time complexity.\\
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+int minDistance(string word1, string word2) {
+    int n=word2.size();
+    int m=word1.size();
+    vector<int> dp(n+1,0);
+    // for(int i=0;i<word1.size()+1;i++) dp[i][0]=i;
+    for(int j=0;j<n+1;j++) dp[j]=j;
+    int pre=0;
+    for(int i=1;i<=m;i++){
+        for(int j=0;j<=n;j++){
+            int temp=dp[j];
+            if(j==0){
+                dp[j]=i;
+            }
+            else{
+                int a= dp[j]+1;
+                int b= dp[j-1]+1;
+                int c=pre;
+                if(word1[i-1]!=word2[j-1]) c++;
+                dp[j]=min(a,min(b,c)); 
+            } 
+            pre=temp;
+        }
+    }
+    return dp[n];
+}
+int main(){
+    string A,B;
+    cin>>A>>B;
+    int distance=minDistance(A,B);
+    cout<<distance<<endl;
+    
+\end{lstlisting}
+
+
+
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\textbf{\large{Critical Edges of Minimum Spanning Tree }}
+
+\vspace{4pt}
+
+The method I use is: Enumeration + Kruscal
+
+In the Kruscal algorithm, we apply union-find to generate mininmum spanning tree. I also optimize union-find. In order to reduce 
+the time cost of stage of $find$, in the stage of $union$, I add the rank of each node(represents the height  of it as the root).
+\vspace{4pt}
+
+Hence the optimal method just takes \textbf{$O(m^2\cdot\alpha(n))$} time complexity and  \textbf{$O(m+n)$}
+space complexity.
+
+The cpp code is attached as follow:
+\begin{lstlisting}
+#include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+using namespace std;
+int Find(int x, vector<int> uf){
+    if(uf[x]!=x){
+        uf[x]=Find(uf[x],uf);
+    }
+    return uf[x];
+}
+bool Union(int x, int y, vector<int> &uf, vector<int>&rank){
+    int px=Find(x,uf);
+    int py=Find(y,uf);
+    if(px==py) return false;
+    else if(rank[px]<rank[py]) uf[px]=py;
+    else if(rank[px]>rank[py]) uf[py]=px;
+    else
+        {
+            uf[py] = px;
+            ++rank[px];
+        }
+    return true;
+}
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> edges;
+    for(int i=0;i<m;i++){
+        int s,t,w;
+        cin>>s>>t>>w;
+        vector<int> temp={s,t,w,i};
+        edges.push_back(temp);
+    }
+    vector<int>uf(n+1);
+    vector<int>rank(n+1);
+    for(int i=1;i<n+1;i++) {
+        uf[i]=i;
+        rank[i]=1;
+    }
+    sort(edges.begin(), edges.end(), [](const vector<int>& a, const vector<int>& b)
+    {
+        return a[2] < b[2];
+    });
+    int weights=0;
+    vector<int> set;
+    for(int i=0;i<m;i++){
+        if(Union(edges[i][0],edges[i][1],uf,rank)) {
+            weights+=edges[i][2];
+            set.push_back(i);
+        }
+    }
+    vector<int> res;
+    for (int i = 0; i < m; ++i)
+    {
+        vector<int>uf1(n+1);
+        vector<int>rank1(n+1);
+        for(int i=1;i<n+1;i++) {
+            uf1[i]=i;
+            rank1[i]=1;
+        }
+        int w1=0;
+        int n1=0;
+        for (int j = 0; j < m; ++j)
+        {
+            if(i!=j && Union(edges[j][0],edges[j][1],uf1,rank1)) {
+                w1+=edges[j][2];
+                n1++;
+            }
+        }
+        // 没有连通 或者 发现权重变大，那么就是关建边
+        if (n1 != n-1 ||  (n1==n-1 && w1 > weights))
+        {
+            res.push_back(edges[i][3]);
+        }
+    }
+    sort(res.begin(),res.end());
+    for(int i=0;i<res.size();i++) cout<<res[i]<<endl;
+}
+\end{lstlisting}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+    \vspace{4pt}
+    \textbf{\large{Minimum Cost to Connect Two Groups of Points}}
+    
+    \vspace{4pt}
+    We convert this question to \textbf{Binary Graph problem} and use \textbf{KM algorithm}:\\
+    If all edge weights are non-negative, then the minimum weight set of edges that covers all the nodes automatically has the property that it has no three-edge paths, because the middle edge of any such path would be redundant. If we assign each vertex to an edge that covers it, some edges will cover both of their endpoints (forming a matching 𝑀
+M) and others will cover only one of their endpoints (and must be the minimum weight edge adjacent to the covered endpoint). If we let $c_v$
+be the cost of the minimum weight edge incident to vertex
+v and $w_e$ be the weight of e
+, then the cost of a solution:\\
+\begin{equation}
+    \begin{split}
+        \sum_{v\in G}C_v+\sum_{u,v\in M}(w_{(u,v)}-C_u-C_v)
+    \end{split}
+\end{equation}
+    \vspace{4pt}
+    The first sum doesn't depend on the choice of the cover, so the problem becomes one of finding a matching that maximizes the total weight, for edge weights
+    $C_u+C_v-W_{(u,v)}$. If you really want this to be a minimum weight perfect matching problem, then instead use weights $W_{(u,v)}-C_u-C_v$
+    and add enough dummy edges with weight zero to guarantee that any matching with the real edges can be extended to a perfect matching by adding dummy edges.
+    
+    Hence the optimal method just takes \textbf{$O(n\cdot m)$} space complexity and  \textbf{$O(n^2)$}
+    time complexity.
+    
+    The cpp code is attached as follow:
+    \begin{lstlisting}
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define MAXN 505
+
+int link[MAXN], visx[MAXN], visy[MAXN],lx[MAXN],ly[MAXN];
+int w[MAXN][MAXN];
+int cost[MAXN][MAXN];
+int n, m;
+int MAX = 0xffffff;
+int can(int t){
+    visx[t] = 1;
+    for(int i = 1; i <= m; i++){
+        //这里“lx[t]+ly[i]==w[t][i]”决定了这是在相等子图中找增广路的前提，非常重要
+        if(!visy[i] && lx[t] + ly[i] == w[t][i]){
+            visy[i] = 1;
+            if(link[i] == -1 || can(link[i])){
+                link[i] = t;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int km(){
+    int sum = 0;
+    for(int i=0; i<=n; i++)
+        ly[i] = 0;
+    for(int i = 1; i <= n; i++){//把各个lx的值都设为当前w[i][j]的最大值
+        lx[i] = -MAX;
+        for(int j = 1; j <= n; j++){
+            if(lx[i] < w[i][j])
+                lx[i] = w[i][j];
+        }
+    }
+    for(int i=1; i<=n; i++)
+        link[i] = -1;
+    for(int i = 1; i <= n; i++){
+        while(1){
+            for(int k=0; k<=n; k++){
+                visx[k] = 0;
+                visy[k] = 0;
+            }
+            if(can(i))//如果它能够形成一条增广路径，那么就break
+                break;
+            int d = MAX;//否则，后面应该加入新的边,这里应该先计算d值
+            //对于搜索过的路径上的XY点，设该路径上的X顶点集为S，Y顶点集为T，对所有在S中的点xi及不在T中的点yj
+            for(int j = 1; j <= n; j++)
+                if(visx[j]){
+                    for(int k = 1; k <= m; k++)
+                        if(!visy[k])
+                            d = min(d, lx[j] + ly[k] - w[j][k]);
+                }
+            if(d == MAX)
+                return -1;//找不到可以加入的边，返回失败（即找不到完美匹配）
+            for (int j = 1; j <= n; j++){
+                if (visx[j])
+                    lx[j] -= d;
+            }
+            for(int j = 1; j <= m; j++){
+                if(visy[j])
+                    ly[j] += d;
+            }
+        }
+    }
+    for(int i = 1; i <= m; i++)
+        if(link[i] > -1)
+            sum += w[link[i]][i];
+    return sum;
+}
+
+int connectTwoGroups() {
+    int tn = n, tm = m;
+    n = max(n, m);
+    m = max(m, n);  //转换成方阵才能过   
+    vector<int> lmin(tn + 1, MAX), rmin(tm + 1, MAX);
+    for (int i = 1; i <= tn; ++i) {
+        for (int j = 1; j <= tm; ++j) {
+            lmin[i] = min(lmin[i], cost[i - 1][j - 1]);
+            rmin[j] = min(rmin[j], cost[i - 1][j - 1]);
+        }
+    }
+    int ans = 0;
+    for(int i=1; i<=tn; i++)
+        ans += lmin[i];
+    for(int i=1; i<=tm; i++)
+        ans += rmin[i];
+    for (int i = 1; i <= tn; ++i) {
+        for (int j = 1; j <= tm; ++j) {
+            w[i][j] = max(0 , lmin[i] + rmin[j] - cost[i - 1][j - 1]);
+        }
+    }
+    return ans - km();
+}
+int main()
+{
+    cin >> n >> m;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            cin >> cost[i][j];
+        }
+    }
+    cout << connectTwoGroups() << endl;;
+    return 0;
+}
+    \end{lstlisting}
+    \end{homeworkProblem}
+
+    \begin{homeworkProblem}
+
+        \vspace{4pt}
+        \textbf{\large{Find Strongly Connected Components  Problem}}
+        
+        \vspace{4pt}
+        
+        For this question, we use \textbf{Kosaraju-sharir algorithm:} the transpose graph (the same graph with the direction of every edge reversed) has exactly the same strongly connected components as the original graph.
+        The detailed step is as follow:\\
+        1. Run DFS and compute the finishing time (reverse post-order) of each node\\
+        2. Reverse the edge directions\\
+        3. Run DFS and consider vertices in the decreasing post-order
+        
+        Hence the optimal method just takes \textbf{$O(V+E)$} time complexity and  \textbf{$O(VE)$}
+       space complexity.
+        
+        The cpp code is attached as follow:
+    \begin{lstlisting}
+#include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+#include<queue>
+using namespace std;
+void dfs(int node, vector<vector<int>> &M,vector<int> &V, int &ft, 
+priority_queue<pair<int,int>> &finish_time){
+    V[node]=1;
+    ft++;
+    for(int i=0;i<M[node].size();i++){
+        if(V[M[node][i]]) continue;
+        dfs(M[node][i],M,V,ft,finish_time);
+    }
+    ft++;
+    finish_time.push({ft,node});
+}
+void dfs_2(int node,vector<vector<int>> &M1,vector<int> &V1){
+    V1[node]=1;
+    for(int i=0;i<M1[node].size();i++){
+        if(V1[M1[node][i]]) continue;
+        dfs_2(M1[node][i],M1,V1);
+    }
+}
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> M(n);
+    vector<vector<int>> M1(n);
+    for(int i=0;i<m;i++){
+        int s,e;
+        cin>>s>>e;
+        M[s].push_back(e);
+        M1[e].push_back(s);
+
+    }
+    vector<int>V(n,0);
+    int ft=0;
+    priority_queue<pair<int,int>> finish_time;
+    for(int i=0;i<n;i++){
+        if(V[i]) continue;
+        dfs(i,M,V,ft,finish_time);
+    }
+    vector<int>V1(n,0);
+    int num=0;
+    while(!(finish_time.empty())){
+        int node=finish_time.top().second;
+        // cout<<finish_time.top().second<<" "<<finish_time.top().first<<endl;
+        finish_time.pop();
+        if(V1[node]) continue;
+        num++;
+        dfs_2(node,M1,V1);
+    }
+    cout<<num<<endl;
+
+}
+    \end{lstlisting}
+        \end{homeworkProblem}
+\end{document}
+

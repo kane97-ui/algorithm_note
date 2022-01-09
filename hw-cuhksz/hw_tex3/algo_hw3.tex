@@ -1,0 +1,370 @@
+\documentclass{article}
+\usepackage[colorlinks, urlcolor=blue, linkcolor=red, citecolor=green]{hyperref}
+\usepackage{fancyhdr} %设置页眉和页脚的
+\usepackage{extramarks} %设置continue那玩意的
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz} %画线的
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{courier}
+\usepackage{listings}
+\usetikzlibrary{automata,positioning}
+
+%表
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\heiti} %还可以定义其他的
+\captionsetup{labelsep=space, font={small, bf}, skip=2pt} %space可以改成quad
+
+%图
+%*****************图片及其相关设置***************************
+\usepackage{graphicx}
+\graphicspath{{tupian/}}
+\usepackage{subfigure}
+% 导入tikz包
+\usepackage{tikz}
+\usetikzlibrary{math}
+
+%*****************代码相关设置***************************
+\usepackage{pythonhighlight}
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass: \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\lstset{
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ language=c++,                                        % 设置语言
+}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#3}
+\newcommand{\hmwkDueDate}{Nov 21, 2021}
+\newcommand{\hmwkClass}{DDA 6050}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Yixiang Fang}
+\newcommand{\hmwkAuthorName}{Haoyu Kang}
+\newcommand{\hmwkAuthorSchool}{School of Data Science}
+\newcommand{\hmwkAuthorNumber}{Sno.220041025}
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+
+
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+\usepackage[algo2e,vlined,ruled]{algorithm2e}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\begin{homeworkProblem}
+
+\vspace{4pt}
+First we assume that the commission is always zero. Let k denote a currency which appears in an optimal sequence ss of trades to go from currency 11 to currency nn. $p_k$ 
+denote the first part of this sequence which changes currencies from 1 to k and $q_k$ 
+denote the rest of the sequence. Then $p_k$ and $q_k$ 
+are both optimal sequences for changing from 1 to k and k to n respectively. To see this, suppose that $p_k$ 
+wasn't optimal but that $p_k'$ 
+was. Then by changing currencies according to the sequence $p_k'q_k$
+we would have a sequence of changes which is better than ss, a contradiction since ss was optimal. The same argument applies to $q_k$ \\
+
+Now suppose that the commissions can take on arbitrary values. Suppose we have currencies 1 through 6, and $r_{12} = r_{23} = r_{34} = r_{45} = 2, r_{13} = r_{35} = 6$
+and all other exchanges are such that $r_{ij} = 100$
+$Let c_1 = 0, c_2 = 1$ and $c_k=10 \ \text{for}\  k \ge3 $\\
+
+The optimal solution in this setup is to change 1 to 3, then 3 to 5, for a total cost of 13. An optimal solution for changing 1 to 3 involves changing 1 to 2 then 2 to 3, for a cost of 5, and an optimal solution for changing 3 to 5 is to change 3 to 4 then 4 to 5, for a total cost of 5. However, combining these optimal solutions to subproblems means making more exchanges overall, and the total cost of combining them is 18, which is not optimal.
+
+\vspace{4pt}
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+
+\vspace{4pt}
+
+We provide a pseudocode which grasps main ideas of an algorithm.\\
+
+\begin{lstlisting}
+    IS-INDEPENDENT(A)
+    n = A.length
+    let Nts[0..n] be an array filled with 0s
+    for each a in A
+        if a.deadline >= n
+            Nts[n] = Nts[n] + 1
+        else
+            Nts[d] = Nts[d] + 1
+    for i = 1 to n
+        Nts[i] = Nts[i] + Nts[i - 1]
+    // at this moment, Nts[i] holds value of N_i(A)
+    for i = 1 to n
+        if Nts[i] > i
+            return false
+    return true
+\end{lstlisting}
+
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+\vspace{4pt}
+\begin{equation}
+    \begin{split}
+        \pi=\left\{0,0,1,2,0,1,2,0,1,2,0,1,2,3,4,5,6,7,8 \right\}
+    \end{split}
+\end{equation}
+
+\end{homeworkProblem}
+\begin{homeworkProblem}
+
+    \vspace{4pt}
+    % \textbf{\large{LIS}}
+    
+    \vspace{4pt}
+    
+    \begin{lstlisting}
+DYNAMIC-ACTIVITY-SELECTOR(s, f, n)
+let c[0..n + 1, 0..n + 1] and act[0..n + 1, 0..n + 1] be new tables
+for i = 0 to n
+    c[i, i] = 0
+    c[i, i + 1] = 0
+c[n + 1, n + 1] = 0
+for l = 2 to n + 1
+    for i = 0 to n - l + 1
+        j = i + l
+        c[i, j] = 0
+        k = j - 1
+        while f[i] < f[k]
+            if f[i] ≤ s[k] and f[k] ≤ s[j] and c[i, k] + c[k, j] + 1 > c[i, j]
+                c[i, j] = c[i, k] + c[k, j] + 1
+                act[i, j] = k
+            k = k - 1
+print "A maximum size set of mutually compatible activities has size" c[0, n + 1]
+print "The set contains"
+PRINT-ACTIVITIES(c, act, 0, n + 1)
+
+PRINT-ACTIVITIES(c, act, i, j)
+    if c[i, j] > 0
+        k = act[i, j]
+        print k
+        PRINT-ACTIVITIES(c, act, i, k)
+        PRINT-ACTIVITIES(c, act, k, j)
+    \end{lstlisting}
+
+    GREEDY-ACTIVITY-SELECTOR runs in $\Theta(n)$time and\\
+    DYNAMIC-ACTIVITY-SELECTOR runs in $O(n^3)$
+
+    \end{homeworkProblem}
+
+    \begin{homeworkProblem}
+
+        Instead of grouping together the two with lowest frequency into pairs that have the smallest total frequency, we will group together the three with lowest frequency in order to have a final result that is a ternary tree. The analysis of optimality is almost identical to the binary case. We are placing the symbols of lowest frequency lower down in the final tree and so they will have longer codewords than the more frequently occurring symbols.
+
+        \end{homeworkProblem}
+
+        \begin{homeworkProblem}
+            \textbf{Decision version:}\\
+            given n, m and t1,t2, . . . ,tn and a target T, is
+there a schedule with makespan at most T?\\
+\textbf{Problem is NP-Complete}:\\ reduce from Subset Sum.\\
+\textbf{greedy algorithm(2-approximation algorithm):}\\
+1. Consider the jobs in some fixed order\\
+2. Assign job j to the machine with lowest load so far\\
+\begin{algorithm}[H]
+    \For{each machine i}{
+    $T_i = 0$ (* initially no load *)\\
+    $A(i) = \emptyset$ (* initially no jobs *)
+    }
+    \For {each job j}{
+    Let i be machine with smallest load\\
+    $A(i) = A(i)\cup{j}$ (* schedule j on i *)\\
+    $T_i = T_i + t_j$ (* compute new load *)
+    }
+      \end{algorithm}
+\textbf{Modified Greedy(3/2-approximation algorithm):}\\
+Sort the jobs in descending order of processing time, and process
+jobs using greedy algorithm
+\begin{algorithm}[H]
+    \For{each machine i}{
+    $T_i = 0$ (* initially no load *)\\
+    $A(i) = \emptyset$ (* initially no jobs *)
+    }
+    \For {each job j in descending order of processing time}{
+    Let i be machine with smallest load\\
+    $A(i) = A(i)\cup{j}$ (* schedule j on i *)\\
+    $T_i = T_i + t_j$ (* compute new load *)
+    }
+      \end{algorithm}
+
+
+
+            \end{homeworkProblem}
+
+        \begin{homeworkProblem}
+            To show a problem is NP-Complete, then proof that the problem is in NP and any NP-Complete problem.
+            \textbf{3-coloring problem is in NP:}\\
+            This can be done in the following way:For each edge {u, v} in graph G verify that the color c(u) != c(v)\\
+            Hence, the assignment can be checked for correctness in the polynomial-time of the graph with respect to its edges O(V+E). \\
+            \textbf{3-coloring problem is NP-Hard:}\\
+            In order to prove that the 3-coloring problem is NP-Hard, perform a reduction from a known NP-Hard problem to this problem. Carry out a reduction from which the 3-SAT problem can be reduced to the 3-coloring problem.Let us assume that the 3-SAT problem has a 3-SAT formula of m clauses on n variables denoted by x1, x2, …, xn. The graph can then be constructed from the formula in the following way:\\
+            1. For every variable xi Construct a vertex vi In the graph and a vertex vi’ denoting the negation of the variable xi.\\
+2. For each clause c in m, add 5 vertices corresponding to values c1, c1, …, c5.\\
+3. Three vertices of different colors are additionally added to denote the values True, False, and Base (T, F, B) respectively.\\
+4. Edges are added among these three additional vertices T, F, B to form a triangle.\\
+5. Edges are added among the vertices vi and vi’ and Base (B) to form a triangle.\\
+
+
+    
+    \end{homeworkProblem}
+
+    \begin{homeworkProblem}
+
+        Suppose for the original tree T = <V, E>. That is, the vertex set is V, the edge set is E. Also
+        suppose the cover set = C. The algorithm can be described as follows:\\
+        \begin{algorithm}[H]
+        Initialize the cover set C =$\emptyset$ \\
+            \While{V =$\emptyset$}{
+                Identify a leaf vertex v\\
+                Locate u = parent(v), the parent vertex of v.\\
+                C = $C \cup{u}$.\\
+                Remote all the edges incident to u
+            }
+            \Return{C}
+          \end{algorithm}
+        \end{homeworkProblem}
+
+        \begin{homeworkProblem}
+
+            Find T' in TT
+    
+    \end{homeworkProblem}
+
+    \begin{homeworkProblem}
+
+        \textbf{Showing the problem is in NP:}\\
+        Let $C = \{S_1, S_2, \dots, S_n\}$ be the certificate.We assume that each $S \in C$, uniquely covers at least one $x \in X$, so:\\
+        \begin{equation}
+            \begin{split}
+                |C|\leq |X|\\
+                \forall S\in C: |S| \leq |X|
+            \end{split}
+        \end{equation}
+        This gives us that we can verify that $n \leq k$ and that C covers X in $O(|x|^2)$ ,which proves the problem is in NP\\
+        \textbf{Showing the problem is NP-hard}\\
+        We will show that the decision version of the set-covering problem is NP-hard by showing:\\
+        $$
+        Vertex-Cover\leq_p Set-Cover
+        $$
+\end{homeworkProblem}
+\end{document}
+
